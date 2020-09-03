@@ -17,8 +17,8 @@ namespace BinaryFunction
             if (!input.Any(x => x == '0' || x == '1'))
                 return false;
 
-            List<char> zeros = GetZerosInString(input);
-            List<char> ones = GetOnesInString(input);
+            List<char> zeros = GetCharsInString(input, '0');
+            List<char> ones = GetCharsInString(input, '1');
             List<string> prefixes = new List<string>();
 
             // Comparison check
@@ -33,22 +33,17 @@ namespace BinaryFunction
 
             foreach (var prefix in prefixes)
             {
-                zeros = GetZerosInString(prefix);
-                ones = GetOnesInString(prefix);
+                zeros = GetCharsInString(prefix, '0');
+                ones = GetCharsInString(prefix, '1');
                 if (ones.Count < zeros.Count)
                     return false;
             }
             return true;
         }
 
-        private static List<char> GetOnesInString(string input)
+        private static List<char> GetCharsInString(string input, char binary)
         {
-            return input.Where(x => x == '1').ToList();
-        }
-
-        private static List<char> GetZerosInString(string input)
-        {
-            return input.Where(x => x == '0').ToList();
+            return input.Where(x => x == binary).ToList();
         }
 
         [Fact]
