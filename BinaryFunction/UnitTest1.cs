@@ -9,13 +9,23 @@ namespace BinaryFunction
     {
         private bool IsValidBinaryString(string input)
         {
+            // Null check
+            if (string.IsNullOrEmpty(input))
+                return false;
+
+            // Binary check
+            if (!input.Any(x => x == '0' || x == '1'))
+                return false;
+
             List<char> zeros = GetZerosInString(input);
             List<char> ones = GetOnesInString(input);
             List<string> prefixes = new List<string>();
 
+            // Comparison check
             if (zeros.Count != ones.Count)
                 return false;
 
+            // Prefixes Check
             for (int i = 1; i <= input.Count(); i++)
             {
                 prefixes.Add(new string(input.Take(i).ToArray()));
@@ -85,6 +95,32 @@ namespace BinaryFunction
         {
             // Arrange
             var str = "001110";
+
+            // Act
+            var result = IsValidBinaryString(str);
+
+            // Assert
+            result.Should().Be(false);
+        }
+
+        [Fact]
+        public void IsValidBinaryString_WhenStringIsEmpty_ExpectFalse()
+        {
+            // Arrange
+            var str = string.Empty;
+
+            // Act
+            var result = IsValidBinaryString(str);
+
+            // Assert
+            result.Should().Be(false);
+        }
+
+        [Fact]
+        public void IsValidBinaryString_WhenStringIsNotBinary_ExpectFalse()
+        {
+            // Arrange
+            var str = "foobar";
 
             // Act
             var result = IsValidBinaryString(str);
